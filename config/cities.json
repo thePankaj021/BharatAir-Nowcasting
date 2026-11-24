@@ -1,0 +1,27 @@
+{
+  "country_iso": "IN",
+  "search_radius_m": 25000,
+  "cities": [
+    {
+      "city": "Bhopal",
+      "state": "Madhya Pradesh",
+      "latitude": 23.2599,
+      "longitude": 77.4126,
+      "coordinate_note": "Approximate city-centre coordinate used only to define an initial 25 km sensor search."
+    },
+    {
+      "city": "Indore",
+      "state": "Madhya Pradesh",
+      "latitude": 22.7196,
+      "longitude": 75.8577,
+      "coordinate_note": "Approximate city-centre coordinate used only to define an initial 25 km sensor search."
+    },
+    {
+      "city": "Delhi",
+      "state": "Delhi",
+      "latitude": 28.6139,
+      "longitude": 77.2090,
+      "coordinate_note": "Approximate city-centre coordinate used only to define an initial 25 km sensor search."
+    }
+  ]
+}

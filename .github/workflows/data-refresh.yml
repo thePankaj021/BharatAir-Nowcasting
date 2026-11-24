@@ -1,0 +1,65 @@
+name: OpenAQ Data Refresh
+
+on:
+  schedule:
+    # Weekly Monday run at 07:30 India Standard Time (02:00 UTC).
+    - cron: "0 2 * * 1"
+  workflow_dispatch:
+    inputs:
+      history_days:
+        description: "Days of hourly history to fetch for approved sensors (7-365)"
+        required: false
+        default: "180"
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: openaq-data-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENAQ_API_KEY: ${{ secrets.OPENAQ_API_KEY }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate OpenAQ credential
+        shell: bash
+        run: |
+          if [[ -z "${OPENAQ_API_KEY}" ]]; then
+            echo "::error::Missing OPENAQ_API_KEY. Add it under Settings > Secrets and variables > Actions > Repository secrets."
+            exit 1
+          fi
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install project
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Run sensor audit and approved-sensor refresh
+        env:
+          HISTORY_DAYS: ${{ inputs.history_days || '180' }}
+        run: |
+          python -m bharatair.pipeline --history-days "$HISTORY_DAYS"
+
+      - name: Upload data and reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bharatair-pipeline-output
+          path: run-output/
+          if-no-files-found: warn
+          retention-days: 30

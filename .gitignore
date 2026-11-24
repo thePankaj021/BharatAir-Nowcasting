@@ -227,3 +227,6 @@ data/raw/*
 !data/raw/.gitkeep
 data/processed/*
 !data/processed/.gitkeep
+
+# Generated local pipeline output and downloaded reports
+run-output/
