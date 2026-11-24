@@ -215,11 +215,22 @@ python -m pytest
 
 See [`.env.example`](.env.example) for the local template. Do not commit credentials.
 
+## Automated data workflow
+
+A weekly GitHub Actions workflow, **OpenAQ Data Refresh**, audits candidate PM2.5 sensors near Bhopal, Indore, and Delhi. It can also refresh hourly observations for sensors that have been explicitly reviewed and approved in `config/selected_sensors.csv`. Each run produces a sensor inventory, data-quality summaries, persistence-baseline metrics, and downloadable data artifacts.
+
+Before the first run, add the repository secret `OPENAQ_API_KEY` under **Settings → Secrets and variables → Actions**. The workflow never stores the key in repository files. See [docs/AUTOMATION_SETUP.md](docs/AUTOMATION_SETUP.md) for the complete setup and sensor-review process.
+
+The weekly workflow does not invent daily commits or automatically approve sensors. It creates a repeatable audit and evaluation package; sensor selection and research interpretation remain reviewable decisions.
+
 ## Development roadmap
 
 - [x] Create repository, project specification, and initial package structure.
 - [x] Add an OpenAQ v3 hourly-sensor data client.
 - [x] Add initial data-quality checks and unit tests.
+- [x] Add city-radius PM2.5 sensor discovery for Bhopal, Indore, and Delhi.
+- [x] Add weekly/manual OpenAQ refresh workflow for reviewed sensors.
+- [x] Add quality summaries and chronological persistence-baseline evaluation.
 - [ ] Audit candidate Indian cities and PM2.5 sensor coverage.
 - [ ] Document sensor-selection criteria and chosen sensors.
 - [ ] Add ingestion metadata and reproducible extraction manifests.
