@@ -1,7 +1,7 @@
 """Convenience wrapper for the BharatAir data-download CLI."""
 
-from bharatair.cli import main
+import bharatair.cli
 
 
 if __name__ == "__main__":
-    main()
+    bharatair.cli.main()
