@@ -197,7 +197,7 @@ The `.env` file is ignored by Git. Do not paste API keys into source code, noteb
 First identify and verify a PM2.5 sensor using the OpenAQ Explorer and its metadata. Then run:
 
 ```bash
-python scripts/download_sensor_data.py --sensor-id YOUR_SENSOR_ID --date-from 2025-01-01T00:00:00Z --date-to 2025-02-01T00:00:00Z
+python -m bharatair.cli --sensor-id YOUR_SENSOR_ID --date-from 2025-01-01T00:00:00Z --date-to 2025-02-01T00:00:00Z
 ```
 
 The command writes a CSV beneath `data/raw/`. The date range is illustrative; choose a range supported by the selected sensor. The downloader does not automatically decide which sensors represent a city.
